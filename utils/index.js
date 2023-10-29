@@ -34,21 +34,6 @@ async function verify(implementation, contractName, arguments = []) {
 
 
 
-async function verify1(implementation, contractName) {
-  if (!process.env.HARDHAT_NETWORK) return;
-  try {
-    await hre.run("verify:verify", {
-      address: implementation,
-      constructorArguments: "",
-    });
-  } catch (e) {
-    if (e.message.includes("Contract source code already verified"))
-      console.log(`${contractName} is verified already`);
-    else console.error(`Error veryfing - ${contractName}`, e);
-  }
-}
-
-
 async function printAddress(contractName, proxyAddress) {
   console.log(`${contractName} Proxy Address: ${proxyAddress}`);
   var implementationAddress = await upgrades.erc1967.getImplementationAddress(
@@ -86,10 +71,6 @@ async function deploySCNoUp(contractName, args = []) {
   return smartContract;
 }
 
-
-
-
-
 async function deploySCNoUp1(contractName) {
   var smartContract = await dc(contractName);
 
@@ -110,7 +91,6 @@ module.exports = {
   printAddress,
   deploySC,
   deploySCNoUp,
+  deploySCNoUp1,
   pEth,
-  verify1,
-  deploySCNoUp1
 };
